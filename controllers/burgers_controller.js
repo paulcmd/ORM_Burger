@@ -18,5 +18,30 @@ router.get("/api/burgers", (req, res) => {
     });
 });
 
+router.post("/api/burgers", (req, res) => {
+    burger.insertOne("burger_name", req.body.burger, function (data) {
+        res.json(data);
+    });
+});
+
+router.put("/api/burgers", (req, res) => {
+    burger.updateOne("devoured", req.body.devoured, req.body.id, function (data) {
+        res.json(data);
+    });
+});
+
+router.delete("/api/burgers", (req, res) => {
+    burger.deleteOne(req.body.id, function (data) {
+        res.json(data);
+    });
+});
+
+// ---------- Default Route ----------
+router.get("*", (req, res) => {
+    burger.selectAll(function (data) {
+        res.render("index", { burgers: data });
+    });
+});
+
 // ---------- Export Router ----------
 module.exports = router;
