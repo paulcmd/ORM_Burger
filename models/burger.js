@@ -11,7 +11,7 @@ $(function () {
     });
 
     $(".devour-btn").on("click", function () {
-        const id = $(this).data("id");
+        let id = $(this).data("id");
         $.ajax("/api/burgers", {
             type: "PUT",
             data: { id: id, devoured: 1 }
@@ -20,5 +20,23 @@ $(function () {
         })
     });
 
+    $(".del-btn").on("click", function () {
+        let id = $(this).data("id");
+        $.ajax("/api/burgers", {
+            type: "DELETE",
+            data: { id: id }
+        }).then(() => {
+            location.reload();
+        });
+    });
 
+    $(".enjoy-btn").on("click", function () {
+        let id = $(this).data("id");
+        $.ajax("/api/burgers", {
+            type: "PUT",
+            data: { id: id, devoured: 0 }
+        }).then(() => {
+            location.reload();
+        });
+    });
 });
