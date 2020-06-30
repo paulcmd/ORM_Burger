@@ -1,42 +1,32 @@
-$(function () {
-    $(".submit").on("click", function (event) {
-        event.preventDefault();
-        const burger_name = $(".burger-name").val().trim();
-        $.ajax("/api/burgers", {
-            type: "POST",
-            data: { burger: burger_name }
-        }).then(() => {
-            location.reload();
+// Import orm.js into burger.js
+const orm = require("../config/orm.js");
+// The code that will call the ORM functions using burger specific input for the ORM.
+const burger = {
+    // Display all burgers in the db.
+    selectAll: function(cb) {
+        orm.selectAll("burgers", function(res) {
+            cb(res);
         });
-    });
-
-    $(".devour-btn").on("click", function () {
-        let id = $(this).data("id");
-        $.ajax("/api/burgers", {
-            type: "PUT",
-            data: { id: id, devoured: 1 }
-        }).then(() => {
-            location.reload();
-        })
-    });
-
-    $(".del-btn").on("click", function () {
-        let id = $(this).data("id");
-        $.ajax("/api/burgers", {
-            type: "DELETE",
-            data: { id: id }
-        }).then(() => {
-            location.reload();
+    },
+    // Add a new burger to the db.
+    insertOne: function(cols, vals, cb) {
+        orm.insertOne("burgers", cols, vals, function(res) {
+            cb(res);
         });
-    });
-
-    $(".enjoy-btn").on("click", function () {
-        let id = $(this).data("id");
-        $.ajax("/api/burgers", {
-            type: "PUT",
-            data: { id: id, devoured: 0 }
-        }).then(() => {
-            location.reload();
+    },
+    // Change the devoured status to true.
+    updateOne: function(objColVals, condition, cb) {
+        orm.updateOne("burgers", objColVals, condition, function(res) {
+            cb(res);
         });
-    });
-});
+    },
+    // Delete a burger from the db.
+    deleteOne: function(condition, cb) {
+        orm.deleteOne("burgers", condition, function(res) {
+            cb(res);
+        });
+    }
+};
+
+// Export at the end of the burger.js file.
+module.exports = burger;
