@@ -21,6 +21,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "mysql2": "^2.0.1",
+    "sequelize": "^5.21.2"
   }
 }
